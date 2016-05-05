@@ -1,0 +1,281 @@
+using System;
+using System.Collections.Generic;
+using System.Text;
+using System.Data;
+
+using ESRI.ArcGIS.Carto;
+using ESRI.ArcGIS.Geometry;
+using ESRI.ArcGIS.Geodatabase;
+using ESRI.ArcGIS.DataSourcesFile;
+using ESRI.ArcGIS.esriSystem;
+
+namespace MapControlApplication2
+{
+    class DataOperator
+    {
+        //保存当前地图对象
+        public IMap m_map;
+        
+        //用于传入当前地图对象
+        public DataOperator(IMap map)
+        {
+            m_map = map;
+
+        }
+
+        //
+        /*public ILayer GetLayerByName(String sLayerName)
+        {
+            //判断图层名或地图对象是否为空。若为空，函数返回为空
+            if (sLayerName == "" || m_map == null)
+            {
+                return null;
+            }
+
+            //对地图对象所有图层进行遍历。若某一图层的名称与指定名称相同，则返回该图层
+            for (int i = 0; i < m_map.LayerCount; i++)
+            {
+                if (m_map.get_Layer(i).Name == sLayerName)
+                {
+                    return m_map.get_Layer(i);
+                }
+            }
+
+            //若地图对象中的所有图层名均与指定图层名不匹配，函数返回空
+            return null;
+        }*/
+
+        //从地图获取要素类对象
+        public static IFeatureClass GetFeatureClass(IMap map, string lyrname)
+        {
+            int i;
+            ILayer iLayer = null;
+            if (lyrname == "" || lyrname == null)
+            {
+                return null;
+            }
+            //IMap map = MapControl.Map;
+            for (i = 0; i < map.LayerCount; i++)
+            {
+                //从一个map里获得第i个图层
+                iLayer = map.get_Layer(i);
+                //获取其图层名
+                string lyrNameTemp = iLayer.Name;
+                //判断图层名是否和输入参数一致，如果一致退出循环
+                if (lyrNameTemp == lyrname)
+                {
+                    break;
+                }
+
+            }
+            if (i >= map.LayerCount)
+                return null;
+            IFeatureLayer featLayer = iLayer as IFeatureLayer;
+            return featLayer.FeatureClass;
+
+        }
+
+        //获取各个洲的名称，并以DataTable类型返回
+        public DataTable GetContinentsNames(string inlayer)
+        {
+            //获取“continents”图层，利用IFeatureLayer接口访问，并判断是否成功。若失败，函数返回空
+            //ILayer layer = GetLayerByName("Continents");
+            IFeatureClass featureLayer = GetFeatureClass(m_map,inlayer);
+            if (featureLayer == null)
+            {
+                return null;
+            }
+
+            //调用IFeatureLayer接口的Search方法，获取要素指针（IFeatureCursor）接口对象，用于在之后遍历图层中的全部要素，
+            //并判断是否成功获取第一个要素。若失败，函数返回空。
+            IFeature feature;
+            IFeatureCursor featureCursor = featureLayer.Search(null, false);
+            feature = featureCursor.NextFeature();
+            if (feature == null)
+            {
+                return null;
+
+            }
+
+            //新建DataTable类型对象，用于函数返回
+            DataTable dataTable = new DataTable();
+
+            //新建DataColumn类型对象，用于保存各洲的序号和名称。设置完毕后，加入dataTable的列的集合（Column）中
+            /*DataColumn dataColumn = new DataColumn();
+            dataColumn.ColumnName = "序号";
+            dataColumn.DataType = System.Type.GetType("System.Int32");
+            dataTable.Columns.Add(dataColumn);
+
+            dataColumn = new DataColumn();
+            dataColumn.ColumnName = "名称";
+            dataColumn.DataType = System.Type.GetType("System.String");
+            dataTable.Columns.Add(dataColumn);*/
+
+
+            IFields fields = feature.Fields;
+            for (int i = 0; i < fields.FieldCount; i++)
+            {
+                DataColumn dataColumn = new DataColumn();
+                IField field =fields.get_Field(i);
+                
+                dataColumn.ColumnName = field.AliasName;
+                dataColumn.DataType = System.Type.GetType("System.String");//field.Type as System.Type;
+                dataTable.Columns.Add(dataColumn);
+            }
+            //将要素在序号和名称字段上的值赋给DataRow中的对应列中。在“continents”图层属性表中，序号信息在第0个字段中，
+            //名称信息在第二个字段中。
+            DataRow dataRow;
+            while (feature != null)
+            {
+                dataRow = dataTable.NewRow();
+                /*dataRow[0] = feature.get_Value(0);
+                dataRow[1] = feature.get_Value(2);*/
+                for (int i = 0; i < fields.FieldCount; i++)
+                {
+                    dataRow[i] = feature.get_Value(i);
+                }
+                dataTable.Rows.Add(dataRow); 
+
+
+                feature = featureCursor.NextFeature();
+            }
+
+
+            //
+            return dataTable;
+        }
+
+        public IFeatureClass CreateFeatureClass(
+            IWorkspace2 workspace, 
+            IFeatureDataset featureDataset,
+            string Name,
+            IFields fields,
+            UID CLSID,
+            UID EXTCLSID,
+            esriFeatureType FeatureType,
+            string ShapeFieldName,
+            string ConfigKeyword)
+        {
+            if (Name == "")
+                return null;
+
+            IFeatureClass featureClass;
+            IFeatureWorkspace featureWorkspace=workspace as IFeatureWorkspace;
+
+            if (workspace.get_NameExists(esriDatasetType.esriDTFeatureClass,Name))
+            {
+                featureClass=featureWorkspace.OpenFeatureClass(Name);
+                return featureClass;
+            }
+            //assign the class id value if not assigned
+            if (CLSID==null)
+            {
+                CLSID=new UIDClass();
+                CLSID.Value="esriGeoDatabase.Feature";
+            }
+            
+            IObjectClassDescription objectClassDescription=new FeatureClassDescription();
+
+            
+            //if (fields==null)
+            {
+                //create the fields using the required fields methond
+                fields = objectClassDescription.RequiredFields;
+                IFieldsEdit fieldsEdit = fields as IFieldsEdit;
+                
+                IField field = new FieldClass();
+
+                //create a user defined text field
+                IFieldEdit fieldEdit = field as IFieldEdit;
+
+                //setup field properties
+                fieldEdit.Name_2 = "OLD";
+                fieldEdit.Type_2 = esriFieldType.esriFieldTypeOID;
+                //fieldEdit.IsNullable_2 = true;
+                fieldEdit.AliasName_2 = "序号";
+                //fieldEdit.DefaultValue_2 = "true";
+                //fieldEdit.Editable_2 = true;
+                //fieldEdit.Length_2 = 100;
+
+                //add field to field collection
+                fieldsEdit.AddField(field);
+
+                //setup field properties
+                fieldEdit.Name_2 = "Name";
+                fieldEdit.Type_2 = esriFieldType.esriFieldTypeString;
+                //fieldEdit.IsNullable_2 = true;
+                fieldEdit.AliasName_2 = "名称";
+                //fieldEdit.DefaultValue_2 = "true";
+                //fieldEdit.Editable_2 = true;
+                //fieldEdit.Length_2 = 100;
+
+                //add field to field collection
+                fieldsEdit.AddField(field);
+                fields = fieldsEdit as IFields; 
+            }
+
+            String strShapeField = "";
+
+            //locate the shape field
+            for (int j=0;j<fields.FieldCount;j++)
+            {
+                if (fields.get_Field(j).Type==esriFieldType.esriFieldTypeGeometry)
+                {
+                    strShapeField = fields.get_Field(j).Name;
+                }
+            }
+
+            //use IFieldChecker to create a validated field collection
+            IFieldChecker fieldChecker =new FieldCheckerClass();
+            IEnumFieldError EnumFieldError =null;
+            IFields validatedFields=null;
+            fieldChecker.ValidateWorkspace=workspace as IWorkspace;
+            fieldChecker.Validate(fields,out EnumFieldError, out validatedFields);
+
+            //The 
+            //finally create and return the feature class
+            if (featureDataset == null)
+            {
+                featureClass=featureWorkspace.CreateFeatureClass(Name,validatedFields,CLSID,EXTCLSID,esriFeatureType.esriFTSimple,strShapeField,ConfigKeyword);
+            }
+            else 
+            {
+                featureClass=featureDataset.CreateFeatureClass(Name,validatedFields,CLSID,EXTCLSID,esriFeatureType.esriFTSimple,strShapeField,ConfigKeyword);
+            }
+
+            return featureClass;
+        }
+
+        public bool AddFeatureClassToMap(
+            IFeatureClass featureClass, //将要被添加的要素累
+            String sLayerName)
+        {
+            //
+            if (featureClassClass==null||slayer==null||m_map==null)
+            {
+                return false;
+            }
+
+            //通过IFeatureLayer接口创建要素图层对象，将要素类以图层的形式进行操作。
+            IFeatureLayer featureLayer = new FeatureLayerClass();
+            featureLayer.FeatureClass = featureClass;
+            featureLayer.Name = sLayerName;
+
+            //将要素图层转换为一般图层，并判断是否成功。若失败，函数返回false。
+            ILayer layer = featureLayer as ILayer;
+            if (layer==null)
+            {
+                return false;
+            }
+
+            //将创建好的图层添加至地图对象，将地图对象转换为活动视图，并判断是否成功。若失败，函数返回false。
+            m_map.AddLayer(layer);
+            IActiveView activeView = m_map as IActiveView;
+            if (activeView==null)
+            {
+
+            }
+        }
+
+    }
+}
