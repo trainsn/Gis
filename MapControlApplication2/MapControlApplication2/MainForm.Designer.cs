@@ -58,9 +58,9 @@ namespace MapControlApplication2
             this.miPageLayout = new System.Windows.Forms.ToolStripMenuItem();
             this.miData = new System.Windows.Forms.ToolStripMenuItem();
             this.miCreateShapefile = new System.Windows.Forms.ToolStripMenuItem();
+            this.miCreatePolygon = new System.Windows.Forms.ToolStripMenuItem();
             this.miAddFeature = new System.Windows.Forms.ToolStripMenuItem();
             this.miDrawPolygon = new System.Windows.Forms.ToolStripMenuItem();
-            this.miCreatePolygon = new System.Windows.Forms.ToolStripMenuItem();
             this.axMapControl1 = new ESRI.ArcGIS.Controls.AxMapControl();
             this.axToolbarControl1 = new ESRI.ArcGIS.Controls.AxToolbarControl();
             this.axTOCControl1 = new ESRI.ArcGIS.Controls.AxTOCControl();
@@ -70,6 +70,8 @@ namespace MapControlApplication2
             this.statusBarXY = new System.Windows.Forms.ToolStripStatusLabel();
             this.cbookmarklist = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.axPageLayoutControl1 = new ESRI.ArcGIS.Controls.AxPageLayoutControl();
+            this.miCreateLine = new System.Windows.Forms.ToolStripMenuItem();
+            this.miAddLine = new System.Windows.Forms.ToolStripMenuItem();
             this.miCreate1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.axMapControl1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.axToolbarControl1)).BeginInit();
@@ -259,8 +261,10 @@ namespace MapControlApplication2
             this.miData.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.miCreateShapefile,
             this.miCreatePolygon,
+            this.miCreateLine,
             this.miAddFeature,
-            this.miDrawPolygon});
+            this.miDrawPolygon,
+            this.miAddLine});
             this.miData.Name = "miData";
             this.miData.Size = new System.Drawing.Size(68, 25);
             this.miData.Text = "数据操作";
@@ -271,6 +275,13 @@ namespace MapControlApplication2
             this.miCreateShapefile.Size = new System.Drawing.Size(165, 22);
             this.miCreateShapefile.Text = "创建Shapefile点";
             this.miCreateShapefile.Click += new System.EventHandler(this.miCreateShapefile_Click);
+            // 
+            // miCreatePolygon
+            // 
+            this.miCreatePolygon.Name = "miCreatePolygon";
+            this.miCreatePolygon.Size = new System.Drawing.Size(165, 22);
+            this.miCreatePolygon.Text = "创建Shapefile面";
+            this.miCreatePolygon.Click += new System.EventHandler(this.miCreatePolygon_Click);
             // 
             // miAddFeature
             // 
@@ -285,13 +296,6 @@ namespace MapControlApplication2
             this.miDrawPolygon.Size = new System.Drawing.Size(165, 22);
             this.miDrawPolygon.Text = "添加面";
             this.miDrawPolygon.Click += new System.EventHandler(this.miDrawPolygon_Click);
-            // 
-            // miCreatePolygon
-            // 
-            this.miCreatePolygon.Name = "miCreatePolygon";
-            this.miCreatePolygon.Size = new System.Drawing.Size(165, 22);
-            this.miCreatePolygon.Text = "创建Shapefile面";
-            this.miCreatePolygon.Click += new System.EventHandler(this.miCreatePolygon_Click);
             // 
             // axMapControl1
             // 
@@ -377,6 +381,20 @@ namespace MapControlApplication2
             this.axPageLayoutControl1.Visible = false;
             this.axPageLayoutControl1.OnMouseDown += new ESRI.ArcGIS.Controls.IPageLayoutControlEvents_Ax_OnMouseDownEventHandler(this.axPageLayoutControl1_OnMouseDown);
             // 
+            // miCreateLine
+            // 
+            this.miCreateLine.Name = "miCreateLine";
+            this.miCreateLine.Size = new System.Drawing.Size(165, 22);
+            this.miCreateLine.Text = "创建Shapefile线";
+            this.miCreateLine.Click += new System.EventHandler(this.miCreateLine_Click);
+            // 
+            // miAddLine
+            // 
+            this.miAddLine.Name = "miAddLine";
+            this.miAddLine.Size = new System.Drawing.Size(165, 22);
+            this.miAddLine.Text = "添加线";
+            this.miAddLine.Click += new System.EventHandler(this.miAddLine_Click);
+            // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
@@ -446,6 +464,8 @@ namespace MapControlApplication2
         private System.Windows.Forms.ToolStripMenuItem miAddFeature;
         private System.Windows.Forms.ToolStripMenuItem miDrawPolygon;
         private System.Windows.Forms.ToolStripMenuItem miCreatePolygon;
+        private System.Windows.Forms.ToolStripMenuItem miCreateLine;
+        private System.Windows.Forms.ToolStripMenuItem miAddLine;
     }
 }
 

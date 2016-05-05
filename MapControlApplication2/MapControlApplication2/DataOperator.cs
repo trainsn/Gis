@@ -249,6 +249,10 @@ namespace MapControlApplication2
                     {
                         geoDefEdit.GeometryType_2 = esriGeometryType.esriGeometryPoint;
                     }
+                    else if (type==2)
+                    {
+                        geoDefEdit.GeometryType_2 = esriGeometryType.esriGeometryPolyline;
+                    }
                     else if (type == 3)
                     {
                         geoDefEdit.GeometryType_2 = esriGeometryType.esriGeometryPolygon;
@@ -317,6 +321,7 @@ namespace MapControlApplication2
             activeView.Refresh();
             return true;
         }
+
         public bool AddFeatureToLayer(
             String sLayerName,      //指定图层的名称
             String sFeatureName,    //将被添加的要素的名称
@@ -412,6 +417,64 @@ namespace MapControlApplication2
 
             //编辑要素，对其坐标、属性值进行设置。保存要素，判断是否成功。
             feature.Shape = polygon;
+            int index = feature.Fields.FindField("Name");
+            feature.set_Value(index, sFeatureName);
+            feature.Store();
+            if (feature == null)
+            {
+                return false;
+            }
+
+            //将地图对象转换为活动视图，判断是否成功。
+            IActiveView activeView = m_map as IActiveView;
+            if (activeView == null)
+            {
+                return false;
+            }
+
+            //活动视图刷新，新添加的要素将被展示在控件中。函数返回true。
+            activeView.Refresh();
+            return true;
+
+        }
+
+        public bool AddFeatureToLayer(
+            String sLayerName,      //指定图层的名称
+            String sFeatureName,    //将被添加的要素的名称
+           IPolyline polyline)   //将被添加要素(polygon)
+        {
+            if (sLayerName == "" || sFeatureName == "" || polyline == null || m_map == null)
+            {
+                return false;
+            }
+
+            ILayer layer = null;
+            for (int i = 0; i < m_map.LayerCount; i++)
+            {
+                layer = m_map.get_Layer(i);
+                if (layer.Name == sLayerName)
+                {
+                    break;
+                }
+                layer = null;
+            }
+
+            if (layer == null)
+            {
+                return false;
+            }
+
+            IFeatureLayer featureLayer = layer as IFeatureLayer;
+            IFeatureClass featureClass = featureLayer.FeatureClass;
+
+            IFeature feature = featureClass.CreateFeature();
+            if (feature == null)
+            {
+                return false;
+            }
+
+            //编辑要素，对其坐标、属性值进行设置。保存要素，判断是否成功。
+            feature.Shape = polyline;
             int index = feature.Fields.FindField("Name");
             feature.set_Value(index, sFeatureName);
             feature.Store();

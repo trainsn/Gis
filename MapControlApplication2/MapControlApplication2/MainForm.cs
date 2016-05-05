@@ -42,6 +42,9 @@ namespace MapControlApplication2
 
         private bool _drawStart = false; //多边形绘制开始标记
         /*DrawPolygon drawPolygon = new DrawPolygon();*/
+
+        private IGeometry _polyline = null;
+        private INewLineFeedback _lineFeedback = null;
         
 
         private void MainForm_Load(object sender, EventArgs e)
@@ -207,6 +210,14 @@ namespace MapControlApplication2
                     _polyFeedback.MoveTo(movePoint);//鼠标移动过程中实时显示反馈效果
                 }
             }
+            if (miAddLine.Checked==true)
+            {
+                if (_startPoint!=null)
+                {
+                    IPoint movePoint = axMapControl1.ActiveView.ScreenDisplay.DisplayTransformation.ToMapPoint(e.x, e.y);
+                    _lineFeedback.MoveTo(movePoint);
+                }
+            }
         }
 
 
@@ -248,6 +259,23 @@ namespace MapControlApplication2
                     }
                 }
             }
+
+            if (miAddLine.Checked==true)
+            {
+                if (e.button==1)
+                {
+                    if (_startPoint==null)
+                    {
+                        _startPoint = /*(axMapControl1.FocusMap as IActiveView)*/axMapControl1.ActiveView.ScreenDisplay.DisplayTransformation.ToMapPoint(e.x, e.y);
+                        _lineFeedback.Start(_startPoint);
+                    }
+                    else 
+                    {
+                        _endPoint = /*(axMapControl1.FocusMap as IActiveView)*/axMapControl1.ActiveView.ScreenDisplay.DisplayTransformation.ToMapPoint(e.x, e.y);
+                        _lineFeedback.AddPoint(_endPoint);
+                    }
+                }
+            }
             return;
         }
 
@@ -261,6 +289,16 @@ namespace MapControlApplication2
 
                 DataOperator dataOperator = new DataOperator(axMapControl1.Map);
                 dataOperator.AddFeatureToLayer("Polygon", "polygon", _polygon as IPolygon);
+            }
+
+            if (miAddLine.Checked==true)
+            {
+                _polyline = _lineFeedback.Stop();
+                _startPoint = null;
+                _drawStart = false;
+
+                DataOperator dataOperator = new DataOperator(axMapControl1.Map);
+                dataOperator.AddFeatureToLayer("Polyline", "polyline", _polyline as IPolyline);
             }
         }
         
@@ -507,6 +545,50 @@ namespace MapControlApplication2
                 return;
             }
         }
+
+        private void miCreateLine_Click(object sender, EventArgs e)
+        {
+            //IFeatureClass iFeatureClass = new IFeatureClass();
+            // IFields iFields = iFeatureClass.Fields;
+            //创建Shape文件，将其以要素类形式返回，并判断是否成功。若失败，消息框提示，函数返回空。
+            DataOperator dataOperator = new DataOperator(axMapControl1.Map);
+
+            IWorkspaceFactory workspaceFactory = new ShapefileWorkspaceFactoryClass();
+            String sParentDirectory = "d://";
+            String sWorkspaceName = "ShapefileWorkSpace";
+            String sFileName = "testline";
+
+            if (System.IO.Directory.Exists(sParentDirectory + sWorkspaceName))
+            {
+                System.IO.Directory.Delete(sParentDirectory + sWorkspaceName, true);
+            }
+
+            IWorkspaceName WorkspaceName = workspaceFactory.Create(sParentDirectory, sWorkspaceName, null, 0);
+            IName name = WorkspaceName as IName;
+
+            IWorkspace workspace = (IWorkspace)name.Open();
+
+            IFeatureClass featureClass = dataOperator.CreateFeatureClass(workspace, sFileName, null, null, null, null, 2);
+            if (featureClass == null)
+            {
+                MessageBox.Show("创建Shape文件失败");
+                return;
+            }
+
+            //将要素类添加到地图中，记录结果。若为true，将创建Shapefile按钮禁用，函数返回空。
+            bool bRes = dataOperator.AddFeatureClassToMap(featureClass, "Polyline");
+            if (bRes)
+            {
+                miCreateLine.Enabled = false;
+                return;
+            }
+            else
+            {
+                MessageBox.Show("将新建Shape文件加入地图失败！");
+                return;
+            }
+        }
+
         private void tsmSimpleRender_Click(object sender, EventArgs e)
         {
             //获取“World Cities”图层。
@@ -697,6 +779,7 @@ namespace MapControlApplication2
             {
                 miAddFeature.Checked = true;
                 miDrawPolygon.Checked = false;
+                miAddLine.Checked = false;
             }
         }
 
@@ -710,6 +793,7 @@ namespace MapControlApplication2
             {
                 miDrawPolygon.Checked = true;
                 miAddFeature.Checked = false;
+                miAddLine.Checked = false;
                 /*drawPolygon.OnClick();*/
                 _polygon = null;//每次重设多边形为空值
                 _drawStart = true; //开始绘制标记置为true
@@ -720,6 +804,28 @@ namespace MapControlApplication2
                 _polyFeedback.Display = axMapControl1.ActiveView.ScreenDisplay;
             }
         }
+
+        private void miAddLine_Click(object sender, EventArgs e)
+        {
+            if (miAddLine.Checked == true)
+            {
+                miAddLine.Checked = false;
+            }
+            else
+            {
+                miAddLine.Checked = true;
+                miAddFeature.Checked = false;
+                miDrawPolygon.Checked = false;
+
+                _polyline = null;
+                _drawStart = true;
+
+                _lineFeedback = new NewLineFeedbackClass();
+                _lineFeedback.Display = axMapControl1.ActiveView.ScreenDisplay;
+            }
+        }
+
+       
 
         
 
