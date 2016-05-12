@@ -14,9 +14,9 @@ namespace MapControlApplication2
     class DataOperator
     {
         //保存当前地图对象
-        public IMap m_map;
+       //用于传入当前地图对象
+         public IMap m_map;
         
-        //用于传入当前地图对象
         public DataOperator(IMap map)
         {
             m_map = map;

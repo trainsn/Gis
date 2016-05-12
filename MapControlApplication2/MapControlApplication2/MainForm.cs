@@ -34,7 +34,7 @@ namespace MapControlApplication2
             InitializeComponent();
         }
         #endregion
-
+        
         private IGeometry _polygon = null;//定义一个几何对象，作为绘制结果
         private INewPolygonFeedback _polyFeedback = null;//定义一个多边形反馈对象
         private IPoint _startPoint = null;//多边形起始节点
@@ -455,7 +455,7 @@ namespace MapControlApplication2
         {
             
             DataOperator dataOperator = new DataOperator(axMapControl1.Map);
-            DataBoard frmABN = new DataBoard("暴力膜蛤不可取", dataOperator.GetContinentsNames(cbLayer.SelectedItem.ToString()));
+            DataBoard frmABN = new DataBoard("暴力膜蛤不可取", dataOperator.GetContinentsNames(cbLayer.SelectedItem.ToString()),axMapControl1.Map);
 
             frmABN.Show();
         }
@@ -512,7 +512,7 @@ namespace MapControlApplication2
 
             IWorkspaceFactory workspaceFactory = new ShapefileWorkspaceFactoryClass();
             String sParentDirectory = "d://";
-            String sWorkspaceName = "ShapefileWorkSpace";
+            String sWorkspaceName = "ShapefileWorkSpacePolygon";
             String sFileName = "test";
 
             if (System.IO.Directory.Exists(sParentDirectory + sWorkspaceName))
@@ -555,7 +555,7 @@ namespace MapControlApplication2
 
             IWorkspaceFactory workspaceFactory = new ShapefileWorkspaceFactoryClass();
             String sParentDirectory = "d://";
-            String sWorkspaceName = "ShapefileWorkSpace";
+            String sWorkspaceName = "ShapefileWorkSpacePolyline";
             String sFileName = "testline";
 
             if (System.IO.Directory.Exists(sParentDirectory + sWorkspaceName))
@@ -825,10 +825,32 @@ namespace MapControlApplication2
             }
         }
 
+        private void miSpatialFilter_Click(object sender, EventArgs e)
+        {
+//             DataQuery DataQuery = new DataQuery(axMapControl1.Map);
+//             DataQuery.Show();
+            MapAnalysis mapAnalysis = new MapAnalysis();
+            mapAnalysis.QueryIntersect("World Cities", "Continents", axMapControl1.Map, esriSpatialRelationEnum.esriSpatialRelationIntersection);
+            IActiveView activeView;
+            activeView = axMapControl1.ActiveView;
+            activeView.PartialRefresh(esriViewDrawPhase.esriViewGeoSelection, 0, axMapControl1.Extent);
+        }
+
+        private void cbBookmarkList_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void miBuffer_Click(object sender, EventArgs e)
+        {
+            MapAnalysis mapAnalysis = new MapAnalysis();
+            mapAnalysis.Buffer("World Cities", "CITY_NAME='New York'", 5, axMapControl1.Map);
+            IActiveView activeView;
+            activeView = axMapControl1.ActiveView;
+            activeView.PartialRefresh(esriViewDrawPhase.esriViewGeoSelection, 0, axMapControl1.Extent);
+         
+        }  
        
-
-        
-
        
     }
 }

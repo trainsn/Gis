@@ -59,8 +59,12 @@ namespace MapControlApplication2
             this.miData = new System.Windows.Forms.ToolStripMenuItem();
             this.miCreateShapefile = new System.Windows.Forms.ToolStripMenuItem();
             this.miCreatePolygon = new System.Windows.Forms.ToolStripMenuItem();
+            this.miCreateLine = new System.Windows.Forms.ToolStripMenuItem();
             this.miAddFeature = new System.Windows.Forms.ToolStripMenuItem();
             this.miDrawPolygon = new System.Windows.Forms.ToolStripMenuItem();
+            this.miAddLine = new System.Windows.Forms.ToolStripMenuItem();
+            this.gIS分析ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.miSpatialFilter = new System.Windows.Forms.ToolStripMenuItem();
             this.axMapControl1 = new ESRI.ArcGIS.Controls.AxMapControl();
             this.axToolbarControl1 = new ESRI.ArcGIS.Controls.AxToolbarControl();
             this.axTOCControl1 = new ESRI.ArcGIS.Controls.AxTOCControl();
@@ -70,8 +74,7 @@ namespace MapControlApplication2
             this.statusBarXY = new System.Windows.Forms.ToolStripStatusLabel();
             this.cbookmarklist = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.axPageLayoutControl1 = new ESRI.ArcGIS.Controls.AxPageLayoutControl();
-            this.miCreateLine = new System.Windows.Forms.ToolStripMenuItem();
-            this.miAddLine = new System.Windows.Forms.ToolStripMenuItem();
+            this.miBuffer = new System.Windows.Forms.ToolStripMenuItem();
             this.miCreate1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.axMapControl1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.axToolbarControl1)).BeginInit();
@@ -91,7 +94,8 @@ namespace MapControlApplication2
             this.cbLayer,
             this.tbRender,
             this.地图显示ToolStripMenuItem,
-            this.miData});
+            this.miData,
+            this.gIS分析ToolStripMenuItem});
             this.miCreate1.Location = new System.Drawing.Point(0, 0);
             this.miCreate1.Name = "miCreate1";
             this.miCreate1.Size = new System.Drawing.Size(859, 29);
@@ -185,6 +189,7 @@ namespace MapControlApplication2
             this.cbBookmarkList.Name = "cbBookmarkList";
             this.cbBookmarkList.Size = new System.Drawing.Size(121, 25);
             this.cbBookmarkList.SelectedIndexChanged += new System.EventHandler(this.SelectedIndexChanged);
+            this.cbBookmarkList.Click += new System.EventHandler(this.cbBookmarkList_Click);
             // 
             // sdata
             // 
@@ -283,6 +288,13 @@ namespace MapControlApplication2
             this.miCreatePolygon.Text = "创建Shapefile面";
             this.miCreatePolygon.Click += new System.EventHandler(this.miCreatePolygon_Click);
             // 
+            // miCreateLine
+            // 
+            this.miCreateLine.Name = "miCreateLine";
+            this.miCreateLine.Size = new System.Drawing.Size(165, 22);
+            this.miCreateLine.Text = "创建Shapefile线";
+            this.miCreateLine.Click += new System.EventHandler(this.miCreateLine_Click);
+            // 
             // miAddFeature
             // 
             this.miAddFeature.Name = "miAddFeature";
@@ -296,6 +308,29 @@ namespace MapControlApplication2
             this.miDrawPolygon.Size = new System.Drawing.Size(165, 22);
             this.miDrawPolygon.Text = "添加面";
             this.miDrawPolygon.Click += new System.EventHandler(this.miDrawPolygon_Click);
+            // 
+            // miAddLine
+            // 
+            this.miAddLine.Name = "miAddLine";
+            this.miAddLine.Size = new System.Drawing.Size(165, 22);
+            this.miAddLine.Text = "添加线";
+            this.miAddLine.Click += new System.EventHandler(this.miAddLine_Click);
+            // 
+            // gIS分析ToolStripMenuItem
+            // 
+            this.gIS分析ToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.miSpatialFilter,
+            this.miBuffer});
+            this.gIS分析ToolStripMenuItem.Name = "gIS分析ToolStripMenuItem";
+            this.gIS分析ToolStripMenuItem.Size = new System.Drawing.Size(64, 25);
+            this.gIS分析ToolStripMenuItem.Text = "GIS分析";
+            // 
+            // miSpatialFilter
+            // 
+            this.miSpatialFilter.Name = "miSpatialFilter";
+            this.miSpatialFilter.Size = new System.Drawing.Size(152, 22);
+            this.miSpatialFilter.Text = "空间查询";
+            this.miSpatialFilter.Click += new System.EventHandler(this.miSpatialFilter_Click);
             // 
             // axMapControl1
             // 
@@ -381,19 +416,12 @@ namespace MapControlApplication2
             this.axPageLayoutControl1.Visible = false;
             this.axPageLayoutControl1.OnMouseDown += new ESRI.ArcGIS.Controls.IPageLayoutControlEvents_Ax_OnMouseDownEventHandler(this.axPageLayoutControl1_OnMouseDown);
             // 
-            // miCreateLine
+            // miBuffer
             // 
-            this.miCreateLine.Name = "miCreateLine";
-            this.miCreateLine.Size = new System.Drawing.Size(165, 22);
-            this.miCreateLine.Text = "创建Shapefile线";
-            this.miCreateLine.Click += new System.EventHandler(this.miCreateLine_Click);
-            // 
-            // miAddLine
-            // 
-            this.miAddLine.Name = "miAddLine";
-            this.miAddLine.Size = new System.Drawing.Size(165, 22);
-            this.miAddLine.Text = "添加线";
-            this.miAddLine.Click += new System.EventHandler(this.miAddLine_Click);
+            this.miBuffer.Name = "miBuffer";
+            this.miBuffer.Size = new System.Drawing.Size(152, 22);
+            this.miBuffer.Text = "缓冲区分析";
+            this.miBuffer.Click += new System.EventHandler(this.miBuffer_Click);
             // 
             // MainForm
             // 
@@ -466,6 +494,9 @@ namespace MapControlApplication2
         private System.Windows.Forms.ToolStripMenuItem miCreatePolygon;
         private System.Windows.Forms.ToolStripMenuItem miCreateLine;
         private System.Windows.Forms.ToolStripMenuItem miAddLine;
+        private System.Windows.Forms.ToolStripMenuItem gIS分析ToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem miSpatialFilter;
+        private System.Windows.Forms.ToolStripMenuItem miBuffer;
     }
 }
 

@@ -58,3 +58,16 @@ F:\Gis\MapControlApplication2\MapControlApplication2\obj\Debug\MapControlApplica
 F:\Gis\MapControlApplication2\MapControlApplication2\obj\Debug\MapControlApplication2.MainForm.resources
 F:\Gis\MapControlApplication2\MapControlApplication2\obj\Debug\MapControlApplication2.Properties.Resources.resources
 F:\Gis\MapControlApplication2\MapControlApplication2\obj\Debug\MapControlApplication2.csproj.GenerateResource.Cache
+H:\Gis\MapControlApplication2\MapControlApplication2\bin\Debug\MapControlApplication2.exe
+H:\Gis\MapControlApplication2\MapControlApplication2\bin\Debug\MapControlApplication2.pdb
+H:\Gis\MapControlApplication2\MapControlApplication2\obj\Debug\ResolveAssemblyReference.cache
+H:\Gis\MapControlApplication2\MapControlApplication2\obj\Debug\MapControlApplication2.AdmitBookmarkName.resources
+H:\Gis\MapControlApplication2\MapControlApplication2\obj\Debug\MapControlApplication2.DataBoard.resources
+H:\Gis\MapControlApplication2\MapControlApplication2\obj\Debug\MapControlApplication2.DataGet.resources
+H:\Gis\MapControlApplication2\MapControlApplication2\obj\Debug\MapControlApplication2.Error.resources
+H:\Gis\MapControlApplication2\MapControlApplication2\obj\Debug\MapControlApplication2.MainForm.resources
+H:\Gis\MapControlApplication2\MapControlApplication2\obj\Debug\MapControlApplication2.Properties.Resources.resources
+H:\Gis\MapControlApplication2\MapControlApplication2\obj\Debug\MapControlApplication2.csproj.GenerateResource.Cache
+H:\Gis\MapControlApplication2\MapControlApplication2\obj\Debug\MapControlApplication2.exe
+H:\Gis\MapControlApplication2\MapControlApplication2\obj\Debug\MapControlApplication2.pdb
+F:\Gis\MapControlApplication2\MapControlApplication2\obj\Debug\MapControlApplication2.DataQuery.resources

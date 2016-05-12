@@ -32,7 +32,7 @@ namespace MapControlApplication2
         private void button1_Click(object sender, EventArgs e)
         {
             DataOperator dataOperator = new DataOperator(m_map);
-            DataBoard frmABN = new DataBoard("暴力膜蛤不可取", dataOperator.GetContinentsNames(textBox1.Text));
+            DataBoard frmABN = new DataBoard("暴力膜蛤不可取", dataOperator.GetContinentsNames(textBox1.Text),m_map);
 
             frmABN.Show();
         }

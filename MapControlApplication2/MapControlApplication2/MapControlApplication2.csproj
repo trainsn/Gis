@@ -83,6 +83,12 @@
       <DependentUpon>DataGet.cs</DependentUpon>
     </Compile>
     <Compile Include="DataOperator.cs" />
+    <Compile Include="DataQuery.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="DataQuery.Designer.cs">
+      <DependentUpon>DataQuery.cs</DependentUpon>
+    </Compile>
     <Compile Include="DrawPolygon.cs">
     </Compile>
     <Compile Include="Error.cs">
@@ -99,6 +105,7 @@
     <Compile Include="MainForm.Designer.cs">
       <DependentUpon>MainForm.cs</DependentUpon>
     </Compile>
+    <Compile Include="MapAnalysis.cs" />
     <Compile Include="MapComposer.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -113,6 +120,10 @@
     <EmbeddedResource Include="DataGet.resx">
       <SubType>Designer</SubType>
       <DependentUpon>DataGet.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="DataQuery.resx">
+      <SubType>Designer</SubType>
+      <DependentUpon>DataQuery.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Error.resx">
       <SubType>Designer</SubType>
