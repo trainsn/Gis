@@ -30,7 +30,11 @@
         {
             this.tbDataName = new System.Windows.Forms.TextBox();
             this.dataGridView1 = new System.Windows.Forms.DataGridView();
+            this.selected = new System.Windows.Forms.Button();
+            this.dataGridView2 = new System.Windows.Forms.DataGridView();
+            this.miAnalysis = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.dataGridView2)).BeginInit();
             this.SuspendLayout();
             // 
             // tbDataName
@@ -53,17 +57,52 @@
             this.dataGridView1.CellMouseDoubleClick += new System.Windows.Forms.DataGridViewCellMouseEventHandler(this.dataGridView1_CellMouseDoubleClick);
             this.dataGridView1.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dataGridView1_CellContentClick);
             // 
+            // selected
+            // 
+            this.selected.Location = new System.Drawing.Point(95, 353);
+            this.selected.Name = "selected";
+            this.selected.Size = new System.Drawing.Size(75, 23);
+            this.selected.TabIndex = 2;
+            this.selected.Text = "selected";
+            this.selected.UseVisualStyleBackColor = true;
+            this.selected.Click += new System.EventHandler(this.selected_Click);
+            // 
+            // dataGridView2
+            // 
+            this.dataGridView2.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.dataGridView2.Location = new System.Drawing.Point(32, 50);
+            this.dataGridView2.Name = "dataGridView2";
+            this.dataGridView2.RowTemplate.Height = 23;
+            this.dataGridView2.Size = new System.Drawing.Size(330, 284);
+            this.dataGridView2.TabIndex = 3;
+            this.dataGridView2.Visible = false;
+            this.dataGridView2.CellDoubleClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dataGridView2_CellMouseDoubleClick);
+            // 
+            // miAnalysis
+            // 
+            this.miAnalysis.Location = new System.Drawing.Point(236, 352);
+            this.miAnalysis.Name = "miAnalysis";
+            this.miAnalysis.Size = new System.Drawing.Size(75, 23);
+            this.miAnalysis.TabIndex = 4;
+            this.miAnalysis.Text = "analysis";
+            this.miAnalysis.UseVisualStyleBackColor = true;
+            this.miAnalysis.Click += new System.EventHandler(this.miAnalysis_Click);
+            // 
             // DataBoard
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(384, 362);
+            this.ClientSize = new System.Drawing.Size(384, 399);
+            this.Controls.Add(this.miAnalysis);
+            this.Controls.Add(this.dataGridView2);
+            this.Controls.Add(this.selected);
             this.Controls.Add(this.dataGridView1);
             this.Controls.Add(this.tbDataName);
             this.Name = "DataBoard";
             this.Text = "数据展示台";
             this.Load += new System.EventHandler(this.DataBoard_Load);
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.dataGridView2)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -73,5 +112,8 @@
 
         private System.Windows.Forms.TextBox tbDataName;
         private System.Windows.Forms.DataGridView dataGridView1;
+        private System.Windows.Forms.Button selected;
+        private System.Windows.Forms.DataGridView dataGridView2;
+        private System.Windows.Forms.Button miAnalysis;
     }
 }

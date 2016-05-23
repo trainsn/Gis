@@ -45,8 +45,8 @@ namespace MapControlApplication2
 
         private IGeometry _polyline = null;
         private INewLineFeedback _lineFeedback = null;
-        
 
+        private DataTable dataTable = null;//每次查询过后用于记录表格
         private void MainForm_Load(object sender, EventArgs e)
         {
             //get the MapControl
@@ -447,15 +447,16 @@ namespace MapControlApplication2
             
             frmABN.Show();*/
 
-            DataGet dataGet = new DataGet(axMapControl1.Map);
-            dataGet.Show();
+//             DataGet dataGet = new DataGet(axMapControl1.Map);
+//             dataGet.Show();
         }
 
         private void SelectedIndexChangedLayer(object sender, EventArgs e)
         {
             
             DataOperator dataOperator = new DataOperator(axMapControl1.Map);
-            DataBoard frmABN = new DataBoard("暴力膜蛤不可取", dataOperator.GetContinentsNames(cbLayer.SelectedItem.ToString()),axMapControl1.Map);
+            MapAnalysis mapAnalysis = new MapAnalysis();
+            DataBoard frmABN = new DataBoard(cbLayer.SelectedItem.ToString(), dataOperator.GetContinentsNamesSelect(cbLayer.SelectedItem.ToString(),null), /*mapAnalysis.Buffer("World Cities", "CITY_NAME='New York'", 5, axMapControl1.Map)*/dataTable,axMapControl1.Map);
 
             frmABN.Show();
         }
@@ -830,7 +831,7 @@ namespace MapControlApplication2
 //             DataQuery DataQuery = new DataQuery(axMapControl1.Map);
 //             DataQuery.Show();
             MapAnalysis mapAnalysis = new MapAnalysis();
-            mapAnalysis.QueryIntersect("World Cities", "Continents", axMapControl1.Map, esriSpatialRelationEnum.esriSpatialRelationIntersection);
+            dataTable=mapAnalysis.QueryIntersect("World Cities", "Continents", axMapControl1.Map, esriSpatialRelationEnum.esriSpatialRelationIntersection);
             IActiveView activeView;
             activeView = axMapControl1.ActiveView;
             activeView.PartialRefresh(esriViewDrawPhase.esriViewGeoSelection, 0, axMapControl1.Extent);
@@ -844,13 +845,22 @@ namespace MapControlApplication2
         private void miBuffer_Click(object sender, EventArgs e)
         {
             MapAnalysis mapAnalysis = new MapAnalysis();
-            mapAnalysis.Buffer("World Cities", "CITY_NAME='New York'", 5, axMapControl1.Map);
+            dataTable=mapAnalysis.Buffer("World Cities", "CITY_NAME='New York'", 5, axMapControl1.Map);
             IActiveView activeView;
             activeView = axMapControl1.ActiveView;
             activeView.PartialRefresh(esriViewDrawPhase.esriViewGeoSelection, 0, axMapControl1.Extent);
          
+        }
+
+        private void miStatistic_Click(object sender, EventArgs e)
+        {
+            MapAnalysis mapAnalysis = new MapAnalysis();
+            string sMsg;
+            sMsg=mapAnalysis.Statistic("Continents","SQMI",axMapControl1.Map);
+            MessageBox.Show(sMsg);
         }  
        
+
        
     }
 }

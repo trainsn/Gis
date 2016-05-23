@@ -65,6 +65,7 @@ namespace MapControlApplication2
             this.miAddLine = new System.Windows.Forms.ToolStripMenuItem();
             this.gIS分析ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.miSpatialFilter = new System.Windows.Forms.ToolStripMenuItem();
+            this.miBuffer = new System.Windows.Forms.ToolStripMenuItem();
             this.axMapControl1 = new ESRI.ArcGIS.Controls.AxMapControl();
             this.axToolbarControl1 = new ESRI.ArcGIS.Controls.AxToolbarControl();
             this.axTOCControl1 = new ESRI.ArcGIS.Controls.AxTOCControl();
@@ -74,7 +75,7 @@ namespace MapControlApplication2
             this.statusBarXY = new System.Windows.Forms.ToolStripStatusLabel();
             this.cbookmarklist = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.axPageLayoutControl1 = new ESRI.ArcGIS.Controls.AxPageLayoutControl();
-            this.miBuffer = new System.Windows.Forms.ToolStripMenuItem();
+            this.miStatistic = new System.Windows.Forms.ToolStripMenuItem();
             this.miCreate1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.axMapControl1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.axToolbarControl1)).BeginInit();
@@ -320,7 +321,8 @@ namespace MapControlApplication2
             // 
             this.gIS分析ToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.miSpatialFilter,
-            this.miBuffer});
+            this.miBuffer,
+            this.miStatistic});
             this.gIS分析ToolStripMenuItem.Name = "gIS分析ToolStripMenuItem";
             this.gIS分析ToolStripMenuItem.Size = new System.Drawing.Size(64, 25);
             this.gIS分析ToolStripMenuItem.Text = "GIS分析";
@@ -331,6 +333,13 @@ namespace MapControlApplication2
             this.miSpatialFilter.Size = new System.Drawing.Size(152, 22);
             this.miSpatialFilter.Text = "空间查询";
             this.miSpatialFilter.Click += new System.EventHandler(this.miSpatialFilter_Click);
+            // 
+            // miBuffer
+            // 
+            this.miBuffer.Name = "miBuffer";
+            this.miBuffer.Size = new System.Drawing.Size(152, 22);
+            this.miBuffer.Text = "缓冲区分析";
+            this.miBuffer.Click += new System.EventHandler(this.miBuffer_Click);
             // 
             // axMapControl1
             // 
@@ -416,12 +425,12 @@ namespace MapControlApplication2
             this.axPageLayoutControl1.Visible = false;
             this.axPageLayoutControl1.OnMouseDown += new ESRI.ArcGIS.Controls.IPageLayoutControlEvents_Ax_OnMouseDownEventHandler(this.axPageLayoutControl1_OnMouseDown);
             // 
-            // miBuffer
+            // miStatistic
             // 
-            this.miBuffer.Name = "miBuffer";
-            this.miBuffer.Size = new System.Drawing.Size(152, 22);
-            this.miBuffer.Text = "缓冲区分析";
-            this.miBuffer.Click += new System.EventHandler(this.miBuffer_Click);
+            this.miStatistic.Name = "miStatistic";
+            this.miStatistic.Size = new System.Drawing.Size(152, 22);
+            this.miStatistic.Text = "要素统计";
+            this.miStatistic.Click += new System.EventHandler(this.miStatistic_Click);
             // 
             // MainForm
             // 
@@ -497,6 +506,7 @@ namespace MapControlApplication2
         private System.Windows.Forms.ToolStripMenuItem gIS分析ToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem miSpatialFilter;
         private System.Windows.Forms.ToolStripMenuItem miBuffer;
+        private System.Windows.Forms.ToolStripMenuItem miStatistic;
     }
 }
 

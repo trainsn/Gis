@@ -76,12 +76,6 @@
     <Compile Include="DataBoard.Designer.cs">
       <DependentUpon>DataBoard.cs</DependentUpon>
     </Compile>
-    <Compile Include="DataGet.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="DataGet.Designer.cs">
-      <DependentUpon>DataGet.cs</DependentUpon>
-    </Compile>
     <Compile Include="DataOperator.cs" />
     <Compile Include="DataQuery.cs">
       <SubType>Form</SubType>
@@ -116,10 +110,6 @@
     <EmbeddedResource Include="DataBoard.resx">
       <SubType>Designer</SubType>
       <DependentUpon>DataBoard.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="DataGet.resx">
-      <SubType>Designer</SubType>
-      <DependentUpon>DataGet.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="DataQuery.resx">
       <SubType>Designer</SubType>

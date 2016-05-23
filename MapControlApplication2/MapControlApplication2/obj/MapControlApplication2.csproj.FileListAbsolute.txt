@@ -53,7 +53,6 @@ F:\Gis\MapControlApplication2\MapControlApplication2\bin\Debug\MapControlApplica
 F:\Gis\MapControlApplication2\MapControlApplication2\obj\Debug\ResolveAssemblyReference.cache
 F:\Gis\MapControlApplication2\MapControlApplication2\obj\Debug\MapControlApplication2.AdmitBookmarkName.resources
 F:\Gis\MapControlApplication2\MapControlApplication2\obj\Debug\MapControlApplication2.DataBoard.resources
-F:\Gis\MapControlApplication2\MapControlApplication2\obj\Debug\MapControlApplication2.DataGet.resources
 F:\Gis\MapControlApplication2\MapControlApplication2\obj\Debug\MapControlApplication2.Error.resources
 F:\Gis\MapControlApplication2\MapControlApplication2\obj\Debug\MapControlApplication2.MainForm.resources
 F:\Gis\MapControlApplication2\MapControlApplication2\obj\Debug\MapControlApplication2.Properties.Resources.resources
@@ -63,7 +62,6 @@ H:\Gis\MapControlApplication2\MapControlApplication2\bin\Debug\MapControlApplica
 H:\Gis\MapControlApplication2\MapControlApplication2\obj\Debug\ResolveAssemblyReference.cache
 H:\Gis\MapControlApplication2\MapControlApplication2\obj\Debug\MapControlApplication2.AdmitBookmarkName.resources
 H:\Gis\MapControlApplication2\MapControlApplication2\obj\Debug\MapControlApplication2.DataBoard.resources
-H:\Gis\MapControlApplication2\MapControlApplication2\obj\Debug\MapControlApplication2.DataGet.resources
 H:\Gis\MapControlApplication2\MapControlApplication2\obj\Debug\MapControlApplication2.Error.resources
 H:\Gis\MapControlApplication2\MapControlApplication2\obj\Debug\MapControlApplication2.MainForm.resources
 H:\Gis\MapControlApplication2\MapControlApplication2\obj\Debug\MapControlApplication2.Properties.Resources.resources
@@ -71,3 +69,4 @@ H:\Gis\MapControlApplication2\MapControlApplication2\obj\Debug\MapControlApplica
 H:\Gis\MapControlApplication2\MapControlApplication2\obj\Debug\MapControlApplication2.exe
 H:\Gis\MapControlApplication2\MapControlApplication2\obj\Debug\MapControlApplication2.pdb
 F:\Gis\MapControlApplication2\MapControlApplication2\obj\Debug\MapControlApplication2.DataQuery.resources
+H:\Gis\MapControlApplication2\MapControlApplication2\obj\Debug\MapControlApplication2.DataQuery.resources

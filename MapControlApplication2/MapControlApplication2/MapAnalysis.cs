@@ -1,17 +1,19 @@
 using System;
 using System.Collections.Generic;
 using System.Text;
+using System.Data;
 
 using ESRI.ArcGIS.Carto;
-using ESRI.ArcGIS.Geodatabase;
 using ESRI.ArcGIS.Geometry;
-using ESRI.ArcGIS.Display;
+using ESRI.ArcGIS.Geodatabase;
+using ESRI.ArcGIS.DataSourcesFile;
+using ESRI.ArcGIS.esriSystem;
 
 namespace MapControlApplication2
 {
     class MapAnalysis
     {
-        public bool QueryIntersect(string srcLayerName,string tgtLayerName,IMap iMap,esriSpatialRelationEnum spatialRel/*string whereClausePolygon,string whereClausePoint*/)
+        public DataTable QueryIntersect(string srcLayerName,string tgtLayerName,IMap iMap,esriSpatialRelationEnum spatialRel/*string whereClausePolygon,string whereClausePoint*/)
         {
             DataOperator dataOperator = new DataOperator(iMap);
 
@@ -42,7 +44,43 @@ namespace MapControlApplication2
             //以空间过滤器对要素进行选择，并建立新选择集
             featSelect.SelectFeatures(spatialFilter, esriSelectionResultEnum.esriSelectionResultNew, false);
 
-            return true;
+            return dataOperator.GetContinentsNamesSelect("World Cities", spatialFilter);
+            //return true;
+        }
+
+        public DataTable QueryIntersect(string srcLayerName, string tgtLayerName, IMap iMap, esriSpatialRelationEnum spatialRel,string continent,string pop)
+        {
+            DataOperator dataOperator = new DataOperator(iMap);
+
+            //定义并根据图层名称获取图层对象
+            IFeatureLayer iSrcLayer = (IFeatureLayer)dataOperator.GetLayerByName(srcLayerName);
+            IFeatureLayer iTgtLayer = (IFeatureLayer)dataOperator.GetLayerByName(tgtLayerName);
+
+            //通过查询过滤获取Continents层中亚洲的几何
+            IGeometry geom;
+            IFeature feature;
+            IFeatureCursor featCursor;
+            IFeatureClass srcFectClass;
+            IQueryFilter queryFilter = new QueryFilterClass();
+            queryFilter.WhereClause = "CONTINENT='"+continent+"'";//设置查询条件
+            featCursor = iTgtLayer.FeatureClass.Search(queryFilter, false);
+            feature = featCursor.NextFeature();
+            geom = feature.Shape;//获取亚洲图形几何
+
+            //根据所选择的几何对城市图层进行属性与空间过滤
+            srcFectClass = iSrcLayer.FeatureClass;
+            ISpatialFilter spatialFilter = new SpatialFilterClass();
+            spatialFilter.Geometry = geom;
+            spatialFilter.WhereClause = "POP_RANK="+pop;//人口等级等于pop的城市
+            spatialFilter.SpatialRel = (esriSpatialRelEnum)spatialRel;
+
+            //定义要素选择对象，以要素搜索图层进行实例化
+            IFeatureSelection featSelect = (IFeatureSelection)iSrcLayer;
+            //以空间过滤器对要素进行选择，并建立新选择集
+            featSelect.SelectFeatures(spatialFilter, esriSelectionResultEnum.esriSelectionResultNew, false);
+
+            return dataOperator.GetContinentsNamesSelect("World Cities", spatialFilter);
+            //return true;
         }
 
 //         public void CreateGraphicBuffersAroundSelectedFeatures(ESRI.ArcGIS.Carto.IActiveView activeView, System.Double distance)
@@ -82,7 +120,7 @@ namespace MapControlApplication2
 // 
 //             activeView.PartialRefresh(ESRI.ArcGIS.Carto.esriViewDrawPhase.esriViewGraphics, null, null);
 //         }
-        public bool Buffer(string layerName,string sWhere,double iSize,IMap map)
+        public DataTable Buffer(string layerName,string sWhere,double iSize,IMap map)
         {
             //根据过滤条件获取城市名称为纽约的城市要素的几何
             IFeatureClass featClass;
@@ -117,7 +155,8 @@ namespace MapControlApplication2
             //以空间过滤器对要素进行选择，并建立新选择集
             featSelect.SelectFeatures(spatialFilter, esriSelectionResultEnum.esriSelectionResultNew, false);
 
-            return true;
+            return dataOperator.GetContinentsNamesSelect("World Cities", spatialFilter);
+            //return true;
 
         }
 
@@ -146,6 +185,31 @@ namespace MapControlApplication2
             featSelect.SelectFeatures(queryFilter, esriSelectionResultEnum.esriSelectionResultNew, false);
 
             return iGeom;
+        }
+
+        public string Statistic(string layerName,string fieldName,IMap iMap)
+        {
+            //根据图层获得指定对象
+            DataOperator dataOperator = new DataOperator(iMap);
+            IFeatureLayer featLayer=(IFeatureLayer)dataOperator.GetLayerByName(layerName);
+          
+            //
+            IFeatureClass featClass = featLayer.FeatureClass;
+            IFeatureCursor featCursor = featClass.Search(null, false);
+            IDataStatistics dataStatistics = new DataStatisticsClass();
+            dataStatistics.Cursor = (ICursor)featCursor;
+            dataStatistics.Field = fieldName;
+
+            IStatisticsResults statResult = dataStatistics.Statistics;
+
+            double dMax = statResult.Maximum;
+            double dMin = statResult.Minimum;
+            double dMean = statResult.Mean;
+
+            string sResult;
+            sResult = "最大面积为" + dMax.ToString() + "最小面积为" + dMin.ToString() + "平均面积为" + dMean.ToString();
+
+            return sResult;           
         }
     }
 }

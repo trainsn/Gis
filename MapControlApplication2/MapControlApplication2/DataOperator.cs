@@ -145,6 +145,75 @@ namespace MapControlApplication2
             return dataTable;
         }
 
+        public DataTable GetContinentsNamesSelect(string inlayer,IQueryFilter queryFilter)
+        {
+            //获取“continents”图层，利用IFeatureLayer接口访问，并判断是否成功。若失败，函数返回空
+            //ILayer layer = GetLayerByName("Continents");
+            IFeatureClass featureLayer = GetFeatureClass(m_map, inlayer);
+            if (featureLayer == null)
+            {
+                return null;
+            }
+
+            //调用IFeatureLayer接口的Search方法，获取要素指针（IFeatureCursor）接口对象，用于在之后遍历图层中的全部要素，
+            //并判断是否成功获取第一个要素。若失败，函数返回空。
+            IFeature feature;
+            IFeatureCursor featureCursor = featureLayer.Search(queryFilter, false);
+            feature = featureCursor.NextFeature();
+            if (feature == null)
+            {
+                return null;
+
+            }
+
+            //新建DataTable类型对象，用于函数返回
+            DataTable dataTable = new DataTable();
+
+            //新建DataColumn类型对象，用于保存各洲的序号和名称。设置完毕后，加入dataTable的列的集合（Column）中
+            /*DataColumn dataColumn = new DataColumn();
+            dataColumn.ColumnName = "序号";
+            dataColumn.DataType = System.Type.GetType("System.Int32");
+            dataTable.Columns.Add(dataColumn);
+
+            dataColumn = new DataColumn();
+            dataColumn.ColumnName = "名称";
+            dataColumn.DataType = System.Type.GetType("System.String");
+            dataTable.Columns.Add(dataColumn);*/
+
+
+            IFields fields = feature.Fields;
+            for (int i = 0; i < fields.FieldCount; i++)
+            {
+                DataColumn dataColumn = new DataColumn();
+                IField field = fields.get_Field(i);
+
+                dataColumn.ColumnName = field.AliasName;
+                dataColumn.DataType = System.Type.GetType("System.String");//field.Type as System.Type;
+                dataTable.Columns.Add(dataColumn);
+            }
+            //将要素在序号和名称字段上的值赋给DataRow中的对应列中。在“continents”图层属性表中，序号信息在第0个字段中，
+            //名称信息在第二个字段中。
+            DataRow dataRow;
+            while (feature != null)
+            {
+                dataRow = dataTable.NewRow();
+                /*dataRow[0] = feature.get_Value(0);
+                dataRow[1] = feature.get_Value(2);*/
+                for (int i = 0; i < fields.FieldCount; i++)
+                {
+                    dataRow[i] = feature.get_Value(i);
+                }
+                dataTable.Rows.Add(dataRow);
+
+
+                feature = featureCursor.NextFeature();
+            }
+
+
+            //
+            return dataTable;
+        }
+
         public IFeatureClass CreateFeatureClass(
             IWorkspace workspace, 
             //IFeatureDataset featureDataset,
@@ -494,6 +563,78 @@ namespace MapControlApplication2
             activeView.Refresh();
             return true;
 
+        }
+
+        public DataTable StatisticContinents()
+        {
+            MapAnalysis mapAnalysis = new MapAnalysis();
+
+            String[] continents;
+            continents=new String[10];
+            int pos=0;
+            int i = 0,j;
+
+            //创建dataTable并添加相应的列
+            DataTable dataTable=new DataTable();
+
+            DataColumn dataColumn = new DataColumn();
+            dataColumn.ColumnName = "Continents";
+            dataColumn.DataType = System.Type.GetType("System.String");
+            dataTable.Columns.Add(dataColumn);
+
+            dataColumn = new DataColumn();
+            dataColumn.ColumnName = "POP";
+            dataColumn.DataType = System.Type.GetType("System.Int32");
+            dataTable.Columns.Add(dataColumn);
+
+            dataColumn = new DataColumn();
+            dataColumn.ColumnName = "C0UNT";
+            dataColumn.DataType = System.Type.GetType("System.Int32");
+            dataTable.Columns.Add(dataColumn);
+
+            //通过GetLayerbyName以及后续操作获取七大洲信息
+            IFeatureLayer featLayer = (IFeatureLayer)GetLayerByName("Continents");
+
+            IFeatureClass featClass;
+            featClass = featLayer.FeatureClass;
+            IFeatureCursor featCursor;
+            featCursor = (IFeatureCursor)featClass.Search(null, false);           
+
+            IFeature feature;
+            feature = featCursor.NextFeature();
+            
+            //通过相关的接口获取七大洲的名称
+            IFields fields = feature.Fields;
+            for (pos = 0; pos < fields.FieldCount; pos++)
+            {
+                IField field =fields.get_Field(pos);
+                
+               if (field.AliasName=="CONTINENT")
+               {
+                   break;
+               }            
+            }
+             
+            DataRow dataRow;
+            while (feature!=null)
+            {
+                continents[i++]=feature.get_Value(pos).ToString();                
+                for (j=1;j<=7;j++)
+                {
+                    DataTable tempDataTable=mapAnalysis.QueryIntersect("World Cities", "Continents", m_map, esriSpatialRelationEnum.esriSpatialRelationIntersection,continents[i-1],j.ToString());    
+                    dataRow=dataTable.NewRow();
+                    dataRow[0]=continents[i-1];
+                    dataRow[1]=j;
+                    if (tempDataTable == null)
+                        dataRow[2] = 0;
+                    else 
+                        dataRow[2]=tempDataTable.Rows.Count;
+                    dataTable.Rows.Add(dataRow); 
+                }
+                feature = featCursor.NextFeature();
+            }
+
+            return dataTable;
         }
 
     }
