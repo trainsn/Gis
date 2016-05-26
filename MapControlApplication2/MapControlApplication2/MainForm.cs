@@ -17,6 +17,7 @@ using ESRI.ArcGIS.Geodatabase;
 using ESRI.ArcGIS.DataSourcesFile;
 using ESRI.ArcGIS.Display;
 using ESRI.ArcGIS.Output;
+using ESRI.ArcGIS.DataSourcesGDB;
 
 
 namespace MapControlApplication2
@@ -456,7 +457,7 @@ namespace MapControlApplication2
             
             DataOperator dataOperator = new DataOperator(axMapControl1.Map);
             MapAnalysis mapAnalysis = new MapAnalysis();
-            DataBoard frmABN = new DataBoard(cbLayer.SelectedItem.ToString(), dataOperator.GetContinentsNamesSelect(cbLayer.SelectedItem.ToString(),null), /*mapAnalysis.Buffer("World Cities", "CITY_NAME='New York'", 5, axMapControl1.Map)*/dataTable,axMapControl1.Map);
+            DataBoard frmABN = new DataBoard(cbLayer.SelectedItem.ToString(), dataOperator.GetContinentsNamesSelect(cbLayer.SelectedItem.ToString(),null),dataTable,axMapControl1.Map);
 
             frmABN.Show();
         }
@@ -738,6 +739,9 @@ namespace MapControlApplication2
             ESRI.ArcGIS.Geometry.IEnvelope envelope = new ESRI.ArcGIS.Geometry.EnvelopeClass();
             envelope.PutCoords(exportRECT.left, exportRECT.top, exportRECT.right, exportRECT.bottom);
             export.PixelBounds = envelope;
+            IWorldFileSettings worldFileSettings = export as IWorldFileSettings;
+            worldFileSettings.MapExtent = activeView.Extent;
+            worldFileSettings.OutputWorldFile = true;            
             System.Int32 hDC = export.StartExporting();
             activeView.Output(hDC, (System.Int16)export.Resolution, ref exportRECT, null, null);
 
@@ -858,6 +862,37 @@ namespace MapControlApplication2
             string sMsg;
             sMsg=mapAnalysis.Statistic("Continents","SQMI",axMapControl1.Map);
             MessageBox.Show(sMsg);
+        }
+
+        private void miCreateRaster_Click(object sender, EventArgs e)
+        {
+            RasterUtil rastUtil = new RasterUtil();
+            rastUtil.CreateRaster("d:\\raster\\Raster.gdb", "rasterForTest");
+        }
+
+        private void miCreatePerson_Click(object sender, EventArgs e)
+        {
+            DataOperator dataOperator = new DataOperator(axMapControl1.Map);
+
+            IWorkspaceFactory workspaceFactory = new AccessWorkspaceFactoryClass();
+            String sParentDirectory = "d:\\raster";
+            String sWorkspaceName = "RasterDatabase";          
+
+            if (System.IO.Directory.Exists(sParentDirectory + sWorkspaceName))
+            {
+                System.IO.Directory.Delete(sParentDirectory + sWorkspaceName, true);
+            }
+
+            IWorkspaceName WorkspaceName = workspaceFactory.Create(sParentDirectory, sWorkspaceName, null, 0);
+            IName name = WorkspaceName as IName;
+
+            IWorkspace workspace = (IWorkspace)name.Open();
+        }
+
+        private void miRasterMosaic_Click(object sender, EventArgs e)
+        {
+            RasterUtil rastUtil = new RasterUtil();
+            rastUtil.Mosaic("d:\\RasterDatabase.MDB", "RasterCatalog", "d:\\raster\\RasterDatabase.MDB", "MosaicRaster");
         }  
        
 

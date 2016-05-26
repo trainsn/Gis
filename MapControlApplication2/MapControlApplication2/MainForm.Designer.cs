@@ -66,6 +66,9 @@ namespace MapControlApplication2
             this.gIS分析ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.miSpatialFilter = new System.Windows.Forms.ToolStripMenuItem();
             this.miBuffer = new System.Windows.Forms.ToolStripMenuItem();
+            this.miStatistic = new System.Windows.Forms.ToolStripMenuItem();
+            this.栅格管理ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.miCreateRaster = new System.Windows.Forms.ToolStripMenuItem();
             this.axMapControl1 = new ESRI.ArcGIS.Controls.AxMapControl();
             this.axToolbarControl1 = new ESRI.ArcGIS.Controls.AxToolbarControl();
             this.axTOCControl1 = new ESRI.ArcGIS.Controls.AxTOCControl();
@@ -75,7 +78,8 @@ namespace MapControlApplication2
             this.statusBarXY = new System.Windows.Forms.ToolStripStatusLabel();
             this.cbookmarklist = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.axPageLayoutControl1 = new ESRI.ArcGIS.Controls.AxPageLayoutControl();
-            this.miStatistic = new System.Windows.Forms.ToolStripMenuItem();
+            this.miCreatePerson = new System.Windows.Forms.ToolStripMenuItem();
+            this.miRasterMosaic = new System.Windows.Forms.ToolStripMenuItem();
             this.miCreate1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.axMapControl1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.axToolbarControl1)).BeginInit();
@@ -96,7 +100,8 @@ namespace MapControlApplication2
             this.tbRender,
             this.地图显示ToolStripMenuItem,
             this.miData,
-            this.gIS分析ToolStripMenuItem});
+            this.gIS分析ToolStripMenuItem,
+            this.栅格管理ToolStripMenuItem});
             this.miCreate1.Location = new System.Drawing.Point(0, 0);
             this.miCreate1.Name = "miCreate1";
             this.miCreate1.Size = new System.Drawing.Size(859, 29);
@@ -330,16 +335,40 @@ namespace MapControlApplication2
             // miSpatialFilter
             // 
             this.miSpatialFilter.Name = "miSpatialFilter";
-            this.miSpatialFilter.Size = new System.Drawing.Size(152, 22);
+            this.miSpatialFilter.Size = new System.Drawing.Size(136, 22);
             this.miSpatialFilter.Text = "空间查询";
             this.miSpatialFilter.Click += new System.EventHandler(this.miSpatialFilter_Click);
             // 
             // miBuffer
             // 
             this.miBuffer.Name = "miBuffer";
-            this.miBuffer.Size = new System.Drawing.Size(152, 22);
+            this.miBuffer.Size = new System.Drawing.Size(136, 22);
             this.miBuffer.Text = "缓冲区分析";
             this.miBuffer.Click += new System.EventHandler(this.miBuffer_Click);
+            // 
+            // miStatistic
+            // 
+            this.miStatistic.Name = "miStatistic";
+            this.miStatistic.Size = new System.Drawing.Size(136, 22);
+            this.miStatistic.Text = "要素统计";
+            this.miStatistic.Click += new System.EventHandler(this.miStatistic_Click);
+            // 
+            // 栅格管理ToolStripMenuItem
+            // 
+            this.栅格管理ToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.miCreateRaster,
+            this.miCreatePerson,
+            this.miRasterMosaic});
+            this.栅格管理ToolStripMenuItem.Name = "栅格管理ToolStripMenuItem";
+            this.栅格管理ToolStripMenuItem.Size = new System.Drawing.Size(68, 25);
+            this.栅格管理ToolStripMenuItem.Text = "栅格管理";
+            // 
+            // miCreateRaster
+            // 
+            this.miCreateRaster.Name = "miCreateRaster";
+            this.miCreateRaster.Size = new System.Drawing.Size(160, 22);
+            this.miCreateRaster.Text = "创建栅格数据集";
+            this.miCreateRaster.Click += new System.EventHandler(this.miCreateRaster_Click);
             // 
             // axMapControl1
             // 
@@ -425,12 +454,19 @@ namespace MapControlApplication2
             this.axPageLayoutControl1.Visible = false;
             this.axPageLayoutControl1.OnMouseDown += new ESRI.ArcGIS.Controls.IPageLayoutControlEvents_Ax_OnMouseDownEventHandler(this.axPageLayoutControl1_OnMouseDown);
             // 
-            // miStatistic
+            // miCreatePerson
             // 
-            this.miStatistic.Name = "miStatistic";
-            this.miStatistic.Size = new System.Drawing.Size(152, 22);
-            this.miStatistic.Text = "要素统计";
-            this.miStatistic.Click += new System.EventHandler(this.miStatistic_Click);
+            this.miCreatePerson.Name = "miCreatePerson";
+            this.miCreatePerson.Size = new System.Drawing.Size(160, 22);
+            this.miCreatePerson.Text = "创建个人数据库";
+            this.miCreatePerson.Click += new System.EventHandler(this.miCreatePerson_Click);
+            // 
+            // miRasterMosaic
+            // 
+            this.miRasterMosaic.Name = "miRasterMosaic";
+            this.miRasterMosaic.Size = new System.Drawing.Size(160, 22);
+            this.miRasterMosaic.Text = "影像镶嵌";
+            this.miRasterMosaic.Click += new System.EventHandler(this.miRasterMosaic_Click);
             // 
             // MainForm
             // 
@@ -507,6 +543,10 @@ namespace MapControlApplication2
         private System.Windows.Forms.ToolStripMenuItem miSpatialFilter;
         private System.Windows.Forms.ToolStripMenuItem miBuffer;
         private System.Windows.Forms.ToolStripMenuItem miStatistic;
+        private System.Windows.Forms.ToolStripMenuItem 栅格管理ToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem miCreateRaster;
+        private System.Windows.Forms.ToolStripMenuItem miCreatePerson;
+        private System.Windows.Forms.ToolStripMenuItem miRasterMosaic;
     }
 }
 

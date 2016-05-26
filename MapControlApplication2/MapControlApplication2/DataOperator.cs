@@ -232,11 +232,6 @@ namespace MapControlApplication2
             IFeatureClass featureClass;
             IFeatureWorkspace featureWorkspace=workspace as IFeatureWorkspace;
 
-//             if (workspace.get_NameExists(esriDatasetType.esriDTFeatureClass,Name))
-//             {
-//                 featureClass=featureWorkspace.OpenFeatureClass(Name);
-//                 return featureClass;
-//             }
             //assign the class id value if not assigned
             if (CLSID==null)
             {
@@ -251,26 +246,9 @@ namespace MapControlApplication2
                 //create the fields using the required fields methond
                 fields = objectClassDescription.RequiredFields;
                 
-//                 fields = new FieldsClass();
                 IFieldsEdit fieldsEdit = fields as IFieldsEdit;
-// 
-//                 Field field = new FieldClass();
-//                 IFieldEdit fieldEdit = (IFieldEdit)field;
-// 
-//                 //setup field properties
-//                 fieldEdit.Name_2 = "OLD";
-//                 fieldEdit.Type_2 = esriFieldType.esriFieldTypeOID;
-//                 //fieldEdit.IsNullable_2 = true;
-//                 fieldEdit.AliasName_2 = "序号";
-//                 //fieldEdit.DefaultValue_2 = "true";
-//                 //fieldEdit.Editable_2 = true;
-//                 //fieldEdit.Length_2 = 100;
-// 
-//                 //add field to field collection
-//                 fieldsEdit.AddField(field);
-//                 
+               
                 //setup field properties
-
                 IFieldEdit fieldEdit = new FieldClass();
 
                 fieldEdit.Name_2 = "Name";
@@ -283,23 +261,6 @@ namespace MapControlApplication2
 
                 //add field to field collection
                 fieldsEdit.AddField((IField)fieldEdit);
-//              
-//                 //创建地理定义，设置其空间参考和几何类型，为创建“形状”字段做准备。
-//                 IGeometryDefEdit geoDefEdit = new GeometryDefClass();
-//                 ISpatialReference spatialReference = m_map.SpatialReference;
-//                 geoDefEdit.SpatialReference_2 = spatialReference;
-//                 geoDefEdit.GeometryType_2 = esriGeometryType.esriGeometryPoint;
-// 
-//                 //创建并编辑“形状字段”。此字段为要素类必须字段。
-//                 fieldEdit = new FieldClass();
-//                 String sShapeFieldName = "Shape";
-//                 fieldEdit.Name_2=sShapeFieldName;
-//                 fieldEdit.AliasName_2="形状";
-//                 fieldEdit.Type_2 = esriFieldType.esriFieldTypeGeometry;
-//                 fieldEdit.GeometryDef_2 = geoDefEdit;
-//                 fieldsEdit.AddField((IField) fieldEdit);
-// 
-//                 fields = fieldsEdit as IFields; 
             }
 
             String strShapeField = "";
@@ -342,17 +303,10 @@ namespace MapControlApplication2
             fieldChecker.ValidateWorkspace=workspace as IWorkspace;
             fieldChecker.Validate(fields,out EnumFieldError, out validatedFields);
 
-            //The 
             //finally create and return the feature class
-            //if (featureDataset == null)
             {
                 featureClass=featureWorkspace.CreateFeatureClass(Name,fields,CLSID,null,esriFeatureType.esriFTSimple,strShapeField,null);
             }
-//             else 
-//             {
-//                 featureClass=featureDataset.CreateFeatureClass(Name,validatedFields,CLSID,EXTCLSID,esriFeatureType.esriFTSimple,strShapeField,ConfigKeyword);
-//             }
-
             return featureClass;
         }
 

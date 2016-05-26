@@ -72,7 +72,6 @@ namespace MapControlApplication2
                 pEnvelope.Expand(1.2, 1.2, true);
 
                 pActiveView.Extent = pEnvelope;
-                //m_map.MapScale = 5000000;   // to set the scale to 1:100
             }
             pActiveView.Refresh();
         }       
