@@ -69,6 +69,8 @@ namespace MapControlApplication2
             this.miStatistic = new System.Windows.Forms.ToolStripMenuItem();
             this.栅格管理ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.miCreateRaster = new System.Windows.Forms.ToolStripMenuItem();
+            this.miCreatePerson = new System.Windows.Forms.ToolStripMenuItem();
+            this.miRasterMosaic = new System.Windows.Forms.ToolStripMenuItem();
             this.axMapControl1 = new ESRI.ArcGIS.Controls.AxMapControl();
             this.axToolbarControl1 = new ESRI.ArcGIS.Controls.AxToolbarControl();
             this.axTOCControl1 = new ESRI.ArcGIS.Controls.AxTOCControl();
@@ -78,8 +80,7 @@ namespace MapControlApplication2
             this.statusBarXY = new System.Windows.Forms.ToolStripStatusLabel();
             this.cbookmarklist = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.axPageLayoutControl1 = new ESRI.ArcGIS.Controls.AxPageLayoutControl();
-            this.miCreatePerson = new System.Windows.Forms.ToolStripMenuItem();
-            this.miRasterMosaic = new System.Windows.Forms.ToolStripMenuItem();
+            this.miCalculator = new System.Windows.Forms.ToolStripMenuItem();
             this.miCreate1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.axMapControl1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.axToolbarControl1)).BeginInit();
@@ -358,7 +359,8 @@ namespace MapControlApplication2
             this.栅格管理ToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.miCreateRaster,
             this.miCreatePerson,
-            this.miRasterMosaic});
+            this.miRasterMosaic,
+            this.miCalculator});
             this.栅格管理ToolStripMenuItem.Name = "栅格管理ToolStripMenuItem";
             this.栅格管理ToolStripMenuItem.Size = new System.Drawing.Size(68, 25);
             this.栅格管理ToolStripMenuItem.Text = "栅格管理";
@@ -369,6 +371,20 @@ namespace MapControlApplication2
             this.miCreateRaster.Size = new System.Drawing.Size(160, 22);
             this.miCreateRaster.Text = "创建栅格数据集";
             this.miCreateRaster.Click += new System.EventHandler(this.miCreateRaster_Click);
+            // 
+            // miCreatePerson
+            // 
+            this.miCreatePerson.Name = "miCreatePerson";
+            this.miCreatePerson.Size = new System.Drawing.Size(160, 22);
+            this.miCreatePerson.Text = "创建个人数据库";
+            this.miCreatePerson.Click += new System.EventHandler(this.miCreatePerson_Click);
+            // 
+            // miRasterMosaic
+            // 
+            this.miRasterMosaic.Name = "miRasterMosaic";
+            this.miRasterMosaic.Size = new System.Drawing.Size(160, 22);
+            this.miRasterMosaic.Text = "影像镶嵌";
+            this.miRasterMosaic.Click += new System.EventHandler(this.miRasterMosaic_Click);
             // 
             // axMapControl1
             // 
@@ -454,19 +470,12 @@ namespace MapControlApplication2
             this.axPageLayoutControl1.Visible = false;
             this.axPageLayoutControl1.OnMouseDown += new ESRI.ArcGIS.Controls.IPageLayoutControlEvents_Ax_OnMouseDownEventHandler(this.axPageLayoutControl1_OnMouseDown);
             // 
-            // miCreatePerson
+            // miCalculator
             // 
-            this.miCreatePerson.Name = "miCreatePerson";
-            this.miCreatePerson.Size = new System.Drawing.Size(160, 22);
-            this.miCreatePerson.Text = "创建个人数据库";
-            this.miCreatePerson.Click += new System.EventHandler(this.miCreatePerson_Click);
-            // 
-            // miRasterMosaic
-            // 
-            this.miRasterMosaic.Name = "miRasterMosaic";
-            this.miRasterMosaic.Size = new System.Drawing.Size(160, 22);
-            this.miRasterMosaic.Text = "影像镶嵌";
-            this.miRasterMosaic.Click += new System.EventHandler(this.miRasterMosaic_Click);
+            this.miCalculator.Name = "miCalculator";
+            this.miCalculator.Size = new System.Drawing.Size(160, 22);
+            this.miCalculator.Text = "栅格计算器";
+            this.miCalculator.Click += new System.EventHandler(this.miCalculator_Click);
             // 
             // MainForm
             // 
@@ -547,6 +556,7 @@ namespace MapControlApplication2
         private System.Windows.Forms.ToolStripMenuItem miCreateRaster;
         private System.Windows.Forms.ToolStripMenuItem miCreatePerson;
         private System.Windows.Forms.ToolStripMenuItem miRasterMosaic;
+        private System.Windows.Forms.ToolStripMenuItem miCalculator;
     }
 }
 

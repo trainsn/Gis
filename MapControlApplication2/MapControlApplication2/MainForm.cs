@@ -893,9 +893,13 @@ namespace MapControlApplication2
         {
             RasterUtil rastUtil = new RasterUtil();
             rastUtil.Mosaic("d:\\RasterDatabase.MDB", "RasterCatalog", "d:\\raster\\RasterDatabase.MDB", "MosaicRaster");
-        }  
-       
+        }
 
+        private void miCalculator_Click(object sender, EventArgs e)
+        {
+            RasterInput rasterInput = new RasterInput();
+            rasterInput.Show();         
+        }        
        
     }
 }

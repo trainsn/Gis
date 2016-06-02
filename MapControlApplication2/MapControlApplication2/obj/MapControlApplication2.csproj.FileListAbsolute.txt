@@ -70,3 +70,4 @@ H:\Gis\MapControlApplication2\MapControlApplication2\obj\Debug\MapControlApplica
 H:\Gis\MapControlApplication2\MapControlApplication2\obj\Debug\MapControlApplication2.pdb
 F:\Gis\MapControlApplication2\MapControlApplication2\obj\Debug\MapControlApplication2.DataQuery.resources
 H:\Gis\MapControlApplication2\MapControlApplication2\obj\Debug\MapControlApplication2.DataQuery.resources
+F:\Gis\MapControlApplication2\MapControlApplication2\obj\Debug\MapControlApplication2.RasterInput.resources

@@ -6,6 +6,9 @@ using ESRI.ArcGIS.Geodatabase;
 using ESRI.ArcGIS.DataSourcesRaster;
 using ESRI.ArcGIS.Geometry;
 using ESRI.ArcGIS.DataSourcesGDB;
+using ESRI.ArcGIS.SpatialAnalyst;
+using ESRI.ArcGIS.Carto;
+using ESRI.ArcGIS.GeoAnalyst;
 
 
 namespace MapControlApplication2
@@ -75,5 +78,101 @@ namespace MapControlApplication2
             saveas.SaveAs(outputName, workspace, "TIFF");
 
         }
+
+        public void RasterCalculateMinus(string filePath,string rasterName,string rasterName2,string outputName)
+        {
+            //控制地图代数的操作
+            IMapAlgebraOp mapAlgebraOp;
+            mapAlgebraOp = new RasterMapAlgebraOpClass();
+
+            //控制raster分析的环境
+            IRasterAnalysisEnvironment rasterAnalysisEnvironment = default(IRasterAnalysisEnvironment);
+            rasterAnalysisEnvironment = (IRasterAnalysisEnvironment)mapAlgebraOp;
+            
+            IWorkspace workspace;
+            IRasterWorkspace rasterWorkspaceEx;
+
+            //设置工作空间
+            IWorkspaceFactory workspaceFactory = new RasterWorkspaceFactoryClass();
+            workspace = workspaceFactory.OpenFromFile(filePath, 0);
+            rasterWorkspaceEx = (IRasterWorkspace)workspace;
+            rasterAnalysisEnvironment.OutWorkspace = workspace;
+
+            //打开栅格数据集
+            IRasterDataset rasterDataset = rasterWorkspaceEx.OpenRasterDataset(rasterName);
+            IRasterDataset rasterDataset2=rasterWorkspaceEx.OpenRasterDataset(rasterName2);
+            
+            mapAlgebraOp.BindRaster(rasterDataset as IGeoDataset, "raster1");
+            mapAlgebraOp.BindRaster(rasterDataset2 as IGeoDataset, "raster2");
+            IRaster outRaster= (IRaster)mapAlgebraOp.Execute("[raster1] - [raster2]");
+
+            ISaveAs2 saveAs;
+            saveAs=(ISaveAs2)outRaster;
+            saveAs.SaveAs(outputName, workspace, "TIFF");
+        }
+
+        public void RasterCalculatePlus(string filePath, string rasterName, string rasterName2, string outputName)
+        {
+            //控制地图代数的操作
+            IMapAlgebraOp mapAlgebraOp;
+            mapAlgebraOp = new RasterMapAlgebraOpClass();
+
+            //控制raster分析的环境
+            IRasterAnalysisEnvironment rasterAnalysisEnvironment = default(IRasterAnalysisEnvironment);
+            rasterAnalysisEnvironment = (IRasterAnalysisEnvironment)mapAlgebraOp;
+
+            IWorkspace workspace;
+            IRasterWorkspace rasterWorkspaceEx;
+
+            //设置工作空间
+            IWorkspaceFactory workspaceFactory = new RasterWorkspaceFactoryClass();
+            workspace = workspaceFactory.OpenFromFile(filePath, 0);
+            rasterWorkspaceEx = (IRasterWorkspace)workspace;
+            rasterAnalysisEnvironment.OutWorkspace = workspace;
+
+            //打开栅格数据集
+            IRasterDataset rasterDataset = rasterWorkspaceEx.OpenRasterDataset(rasterName);
+            IRasterDataset rasterDataset2 = rasterWorkspaceEx.OpenRasterDataset(rasterName2);
+
+            mapAlgebraOp.BindRaster(rasterDataset as IGeoDataset, "raster1");
+            mapAlgebraOp.BindRaster(rasterDataset2 as IGeoDataset, "raster2");
+            IRaster outRaster = (IRaster)mapAlgebraOp.Execute("[raster1] + [raster2]");
+
+            ISaveAs2 saveAs;
+            saveAs = (ISaveAs2)outRaster;
+            saveAs.SaveAs(outputName, workspace, "TIFF");
+        }
+
+        public void RasterCalculateMultiply(string filePath, string rasterName, string rasterName2, string outputName)
+        {
+            //控制地图代数的操作
+            IMapAlgebraOp mapAlgebraOp;
+            mapAlgebraOp = new RasterMapAlgebraOpClass();
+
+            //控制raster分析的环境
+            IRasterAnalysisEnvironment rasterAnalysisEnvironment = default(IRasterAnalysisEnvironment);
+            rasterAnalysisEnvironment = (IRasterAnalysisEnvironment)mapAlgebraOp;
+
+            IWorkspace workspace;
+            IRasterWorkspace rasterWorkspaceEx;
+
+            //设置工作空间
+            IWorkspaceFactory workspaceFactory = new RasterWorkspaceFactoryClass();
+            workspace = workspaceFactory.OpenFromFile(filePath, 0);
+            rasterWorkspaceEx = (IRasterWorkspace)workspace;
+            rasterAnalysisEnvironment.OutWorkspace = workspace;
+
+            //打开栅格数据集
+            IRasterDataset rasterDataset = rasterWorkspaceEx.OpenRasterDataset(rasterName);
+            IRasterDataset rasterDataset2 = rasterWorkspaceEx.OpenRasterDataset(rasterName2);
+
+            mapAlgebraOp.BindRaster(rasterDataset as IGeoDataset, "raster1");
+            mapAlgebraOp.BindRaster(rasterDataset2 as IGeoDataset, "raster2");
+            IRaster outRaster = (IRaster)mapAlgebraOp.Execute("[raster1] * [raster2]");
+
+            ISaveAs2 saveAs;
+            saveAs = (ISaveAs2)outRaster;
+            saveAs.SaveAs(outputName, workspace, "TIFF");
+        }    
     }
 }
