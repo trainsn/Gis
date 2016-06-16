@@ -35,8 +35,6 @@
             this.plus = new System.Windows.Forms.Button();
             this.minus = new System.Windows.Forms.Button();
             this.multiply = new System.Windows.Forms.Button();
-            this.outpath = new System.Windows.Forms.Label();
-            this.textBox1 = new System.Windows.Forms.TextBox();
             this.SuspendLayout();
             // 
             // label1
@@ -101,29 +99,11 @@
             this.multiply.UseVisualStyleBackColor = true;
             this.multiply.Click += new System.EventHandler(this.multiply_Click);
             // 
-            // outpath
-            // 
-            this.outpath.AutoSize = true;
-            this.outpath.Location = new System.Drawing.Point(51, 185);
-            this.outpath.Name = "outpath";
-            this.outpath.Size = new System.Drawing.Size(47, 12);
-            this.outpath.TabIndex = 11;
-            this.outpath.Text = "outpath";
-            // 
-            // textBox1
-            // 
-            this.textBox1.Location = new System.Drawing.Point(131, 185);
-            this.textBox1.Name = "textBox1";
-            this.textBox1.Size = new System.Drawing.Size(263, 21);
-            this.textBox1.TabIndex = 12;
-            // 
             // RasterInput
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(498, 262);
-            this.Controls.Add(this.textBox1);
-            this.Controls.Add(this.outpath);
+            this.ClientSize = new System.Drawing.Size(498, 187);
             this.Controls.Add(this.multiply);
             this.Controls.Add(this.minus);
             this.Controls.Add(this.plus);
@@ -133,6 +113,7 @@
             this.Controls.Add(this.label1);
             this.Name = "RasterInput";
             this.Text = "RasterInput";
+            this.Load += new System.EventHandler(this.RasterInput_Load);
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -147,7 +128,5 @@
         private System.Windows.Forms.Button plus;
         private System.Windows.Forms.Button minus;
         private System.Windows.Forms.Button multiply;
-        private System.Windows.Forms.Label outpath;
-        private System.Windows.Forms.TextBox textBox1;
     }
 }

@@ -32,5 +32,10 @@ namespace MapControlApplication2
             RasterUtil rastUtil = new RasterUtil();
             rastUtil.RasterCalculateMultiply(path1.Text, filename1.Text, filename1.Text, "multiply.tif");
         }
+
+        private void RasterInput_Load(object sender, EventArgs e)
+        {
+
+        }
     }
 }

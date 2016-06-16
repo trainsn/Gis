@@ -71,6 +71,7 @@ namespace MapControlApplication2
             this.miCreateRaster = new System.Windows.Forms.ToolStripMenuItem();
             this.miCreatePerson = new System.Windows.Forms.ToolStripMenuItem();
             this.miRasterMosaic = new System.Windows.Forms.ToolStripMenuItem();
+            this.miCalculator = new System.Windows.Forms.ToolStripMenuItem();
             this.axMapControl1 = new ESRI.ArcGIS.Controls.AxMapControl();
             this.axToolbarControl1 = new ESRI.ArcGIS.Controls.AxToolbarControl();
             this.axTOCControl1 = new ESRI.ArcGIS.Controls.AxTOCControl();
@@ -80,7 +81,8 @@ namespace MapControlApplication2
             this.statusBarXY = new System.Windows.Forms.ToolStripStatusLabel();
             this.cbookmarklist = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.axPageLayoutControl1 = new ESRI.ArcGIS.Controls.AxPageLayoutControl();
-            this.miCalculator = new System.Windows.Forms.ToolStripMenuItem();
+            this.扩展功能ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.miExtentGP = new System.Windows.Forms.ToolStripMenuItem();
             this.miCreate1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.axMapControl1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.axToolbarControl1)).BeginInit();
@@ -102,7 +104,8 @@ namespace MapControlApplication2
             this.地图显示ToolStripMenuItem,
             this.miData,
             this.gIS分析ToolStripMenuItem,
-            this.栅格管理ToolStripMenuItem});
+            this.栅格管理ToolStripMenuItem,
+            this.扩展功能ToolStripMenuItem});
             this.miCreate1.Location = new System.Drawing.Point(0, 0);
             this.miCreate1.Name = "miCreate1";
             this.miCreate1.Size = new System.Drawing.Size(859, 29);
@@ -386,6 +389,13 @@ namespace MapControlApplication2
             this.miRasterMosaic.Text = "影像镶嵌";
             this.miRasterMosaic.Click += new System.EventHandler(this.miRasterMosaic_Click);
             // 
+            // miCalculator
+            // 
+            this.miCalculator.Name = "miCalculator";
+            this.miCalculator.Size = new System.Drawing.Size(160, 22);
+            this.miCalculator.Text = "栅格计算器";
+            this.miCalculator.Click += new System.EventHandler(this.miCalculator_Click);
+            // 
             // axMapControl1
             // 
             this.axMapControl1.Dock = System.Windows.Forms.DockStyle.Fill;
@@ -470,12 +480,20 @@ namespace MapControlApplication2
             this.axPageLayoutControl1.Visible = false;
             this.axPageLayoutControl1.OnMouseDown += new ESRI.ArcGIS.Controls.IPageLayoutControlEvents_Ax_OnMouseDownEventHandler(this.axPageLayoutControl1_OnMouseDown);
             // 
-            // miCalculator
+            // 扩展功能ToolStripMenuItem
             // 
-            this.miCalculator.Name = "miCalculator";
-            this.miCalculator.Size = new System.Drawing.Size(160, 22);
-            this.miCalculator.Text = "栅格计算器";
-            this.miCalculator.Click += new System.EventHandler(this.miCalculator_Click);
+            this.扩展功能ToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.miExtentGP});
+            this.扩展功能ToolStripMenuItem.Name = "扩展功能ToolStripMenuItem";
+            this.扩展功能ToolStripMenuItem.Size = new System.Drawing.Size(68, 25);
+            this.扩展功能ToolStripMenuItem.Text = "扩展功能";
+            // 
+            // miExtentGP
+            // 
+            this.miExtentGP.Name = "miExtentGP";
+            this.miExtentGP.Size = new System.Drawing.Size(163, 22);
+            this.miExtentGP.Text = "geoprocessing";
+            this.miExtentGP.Click += new System.EventHandler(this.miExtentGP_Click);
             // 
             // MainForm
             // 
@@ -557,6 +575,8 @@ namespace MapControlApplication2
         private System.Windows.Forms.ToolStripMenuItem miCreatePerson;
         private System.Windows.Forms.ToolStripMenuItem miRasterMosaic;
         private System.Windows.Forms.ToolStripMenuItem miCalculator;
+        private System.Windows.Forms.ToolStripMenuItem 扩展功能ToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem miExtentGP;
     }
 }
 

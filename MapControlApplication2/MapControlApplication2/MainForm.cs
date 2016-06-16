@@ -899,6 +899,12 @@ namespace MapControlApplication2
         {
             RasterInput rasterInput = new RasterInput();
             rasterInput.Show();         
+        }
+
+        private void miExtentGP_Click(object sender, EventArgs e)
+        {
+            Extent extent = new Extent();
+            extent.ExecuteGP();
         }        
        
     }
